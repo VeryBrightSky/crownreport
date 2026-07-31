@@ -36,6 +36,13 @@
   font:700 .88rem "Public Sans",sans-serif;color:var(--ink);text-decoration:none}
 .qlinks a span{display:block;font:500 .68rem "IBM Plex Mono",monospace;color:var(--muted);margin-top:3px;letter-spacing:.03em}
 .qlinks a:hover{border-color:var(--pine)}
+.insight{font:500 .82rem "Public Sans",sans-serif;color:var(--muted);background:var(--sage);border-radius:10px;padding:10px 14px;margin:12px 0 0}
+.insight b{color:var(--ink)}
+.analytics-embed{border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:var(--sh);padding:18px;margin:14px 0 0}
+.ae-head b{font:800 1.05rem "Bricolage Grotesque",sans-serif;color:var(--ink);display:block}
+.ae-head span{font:500 .8rem "Public Sans",sans-serif;color:var(--muted);display:block;margin-top:3px}
+.ae-note{font:500 .82rem "Public Sans",sans-serif;color:var(--muted);line-height:1.6;margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.ae-note b{color:var(--pine)}
 </style>
 <script type="speculationrules">
 {"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/admin.html"}}]},"eagerness":"moderate"}]}
@@ -62,10 +69,19 @@
     <p class="kicker">Command center</p>
     <h2 style="font-size:1.7rem;margin:.2rem 0 0">The Crown Report Admin</h2>
     <div class="stats" id="stats"></div>
+    <p class="insight" id="insight"></p>
     <div class="qlinks">
-      <a href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank" rel="noopener">📊 Visitor analytics <span>visits · referrers · top pages</span></a>
-      <a href="https://app.katalys.com" target="_blank" rel="noopener">💰 Katalys reports <span>clicks · conversions · commissions</span></a>
+      <a href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank" rel="noopener">📊 Full visitor analytics <span>visits · unique visitors · referrers · top pages · countries · devices</span></a>
+      <a href="https://app.katalys.com" target="_blank" rel="noopener">💰 Katalys money reports <span>clicks · conversions · commissions earned</span></a>
+      <a href="https://dash.cloudflare.com/?to=/:account/workers/services/view/crownreport1/production/metrics" target="_blank" rel="noopener">⚡ Live traffic now <span>requests/sec · errors · response time</span></a>
       <a href="reader-results.html" target="_blank">👀 Live reader page <span>what visitors see</span></a>
+    </div>
+    <div class="analytics-embed">
+      <div class="ae-head">
+        <b>📈 Visitor analytics</b>
+        <span>Visits, referrers (which Reddit thread or pin sent them), top pages, countries, and devices. Cookieless and private.</span>
+      </div>
+      <p class="ae-note">Cloudflare shows the full interactive charts. Tap <b>Full visitor analytics</b> above to open your live dashboard: visits over time, where every visitor came from, which pages they read, and what devices they use. Data appears within minutes of your first visitor.</p>
     </div>
     <h3 style="margin:1.6rem 0 0">Review queue</h3>
     <div class="tabs">
@@ -94,14 +110,25 @@ function show(ok){$("login").classList.toggle("hidden",ok);$("dash").classList.t
 function render(){
   const by=s=>SUBS.filter(x=>x.status===s).length;
   cPending.textContent=by("pending");cApproved.textContent=by("approved");cRejected.textContent=by("rejected");
-  const wk=Date.now()-6048e5;
+  const now=Date.now(),day=864e5,wk=now-7*day,mo=now-30*day,today=new Date().setHours(0,0,0,0);
+  const withPhoto=SUBS.filter(x=>x.photo&&x.photo.length>100).length;
+  const approvRate=SUBS.length?Math.round(by("approved")/SUBS.length*100):0;
+  // most common treatment mentioned
+  const tally={}; SUBS.forEach(s=>{const t=(s.treatment||"").toLowerCase().trim(); if(t)tally[t]=(tally[t]||0)+1;});
+  const topT=Object.entries(tally).sort((a,b)=>b[1]-a[1])[0];
   $("stats").innerHTML=[
     ["Total submissions",SUBS.length],
     ["Pending review",by("pending")],
-    ["Published",by("approved")],
+    ["Published live",by("approved")],
+    ["Today",SUBS.filter(x=>x.ts>=today).length],
     ["This week",SUBS.filter(x=>x.ts>wk).length],
-    ["With photos",SUBS.filter(x=>x.photo&&x.photo.length>100).length]
+    ["This month",SUBS.filter(x=>x.ts>mo).length],
+    ["With photos",withPhoto],
+    ["Approval rate",approvRate+"%"]
   ].map(([l,v])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
+  $("insight").innerHTML = SUBS.length
+    ? `<b>Most reviewed treatment:</b> ${topT?esc(topT[0])+" ("+topT[1]+")":"n/a"} &nbsp;·&nbsp; <b>Newest:</b> ${esc(new Date(Math.max(...SUBS.map(s=>s.ts))).toLocaleDateString())}`
+    : "No submissions yet. Share your reader-results form to start collecting stories.";
   const items=SUBS.filter(x=>x.status===TAB);
   $("empty").style.display=items.length?"none":"block";
   $("list").innerHTML=items.map(s=>`
