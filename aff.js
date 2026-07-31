@@ -259,3 +259,38 @@ if (window.CF_ANALYTICS_TOKEN) {
   s.setAttribute("data-cf-beacon", JSON.stringify({ token: window.CF_ANALYTICS_TOKEN }));
   document.head.appendChild(s);
 }
+
+// conversion layer: next-step box + mobile sticky quiz bar on article pages
+(function(){
+  const skip = /admin|hair-loss-quiz|hair-loss-cost-calculator|share-your-story|reader-results|articles|compare-photos|shed-checker|404/;
+  if (skip.test(location.pathname)) return;
+  if (location.pathname === "/" || /index\.html$/.test(location.pathname)) return;
+  const by = document.querySelector("main .byline");
+  if (!by) return;
+
+  // 1) "Your next step" box: injected before the first disclaimer accordion
+  const fp = document.querySelector("main details.fp");
+  if (fp && !document.getElementById("nextsteps")) {
+    const d = document.createElement("div");
+    d.id = "nextsteps"; d.className = "note";
+    d.innerHTML = '<strong>Your next step:</strong> not sure what fits your case? The <a href="hair-loss-quiz.html">60-second quiz</a> routes you, the <a href="best-hair-loss-treatment-budget.html">budget guide</a> maps every price tier, and the <a href="hair-loss-cost-calculator.html">cost calculator</a> shows what each path totals over the years.';
+    fp.parentNode.insertBefore(d, fp);
+  }
+
+  // 2) dismissible sticky quiz bar, appears after 35% scroll, once per session
+  if (sessionStorage.getItem("cr_bar")) return;
+  const bar = document.createElement("div");
+  bar.id = "quizbar";
+  bar.innerHTML = '<span>Not sure which treatment fits <b>you</b>?</span><a href="hair-loss-quiz.html">60-second quiz →</a><button type="button" aria-label="Dismiss">✕</button>';
+  document.body.appendChild(bar);
+  bar.querySelector("button").addEventListener("click", () => {
+    bar.classList.remove("on");
+    sessionStorage.setItem("cr_bar", "1");
+  });
+  let shown = false;
+  addEventListener("scroll", () => {
+    if (shown) return;
+    const p = scrollY / (document.documentElement.scrollHeight - innerHeight);
+    if (p > 0.65) { bar.classList.add("on"); shown = true; }
+  }, { passive: true });
+})();
