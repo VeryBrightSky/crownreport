@@ -764,7 +764,7 @@ header.hide{transform:translateY(-100%)}
 
 /* scroll-driven rotating crown (transparent sprite sequence) */
 .crown-sprite{position:absolute;inset:0;z-index:2;opacity:0;transition:opacity .45s ease;
-  background-image:url('img/crown-sprite.png');background-repeat:no-repeat;
+  background-image:url('crown-sprite.png');background-repeat:no-repeat;
   background-size:600% 400%;                /* 6 cols x 4 rows */
   filter:drop-shadow(0 30px 44px rgba(0,0,0,.45))}
 .crown-stage.seq .crown-sprite{opacity:1}
@@ -828,3 +828,14 @@ main img,main video,main table,main pre{max-width:100%}
   font:700 .85rem "Public Sans",sans-serif;box-shadow:0 10px 30px rgba(15,30,22,.35);
   opacity:0;transition:opacity .3s ease,transform .3s ease;pointer-events:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* pillar-cluster navigation */
+.cluster-hub{border:1px solid var(--line);border-left:3px solid var(--amber-ink);border-radius:var(--r);
+  background:var(--card);padding:18px 20px;margin:1.8rem 0;box-shadow:var(--sh)}
+.cluster-hub b{display:block;font:800 .72rem "IBM Plex Mono",monospace;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.cluster-hub ul{margin:0;padding-left:1.1rem;columns:2;column-gap:24px}
+@media(max-width:600px){.cluster-hub ul{columns:1}}
+.cluster-hub li{margin:.35rem 0;font-size:.92rem}
+.cluster-back{font:500 .88rem "Public Sans",sans-serif;color:var(--muted);
+  border-top:1px solid var(--line);padding-top:14px;margin:1.8rem 0 0}
