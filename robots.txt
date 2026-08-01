@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
-Sitemap: https://crownreport1.cleanfeed.workers.dev/sitemap.xml
+Sitemap: https://thecrownreport.com/sitemap.xml
