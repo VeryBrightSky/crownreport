@@ -350,7 +350,7 @@ if (window.CF_ANALYTICS_TOKEN) {
   const COLS = 6, ROWS = 4, TOTAL = COLS * ROWS;
   const img = new Image();
   img.onload = () => { stage.classList.add("seq"); update(); };
-  img.src = "crown-sprite.png";
+  img.src = "crown-sprite.webp";
 
   let cur = 0, tgt = 0, raf = null;
   function progress(){

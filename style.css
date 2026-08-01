@@ -764,7 +764,7 @@ header.hide{transform:translateY(-100%)}
 
 /* scroll-driven rotating crown (transparent sprite sequence) */
 .crown-sprite{position:absolute;inset:0;z-index:2;opacity:0;transition:opacity .45s ease;
-  background-image:url('crown-sprite.png');background-repeat:no-repeat;
+  background-image:url('crown-sprite.webp');background-repeat:no-repeat;
   background-size:600% 400%;                /* 6 cols x 4 rows */
   filter:drop-shadow(0 30px 44px rgba(0,0,0,.45))}
 .crown-stage.seq .crown-sprite{opacity:1}
@@ -839,3 +839,8 @@ main img,main video,main table,main pre{max-width:100%}
 .cluster-hub li{margin:.35rem 0;font-size:.92rem}
 .cluster-back{font:500 .88rem "Public Sans",sans-serif;color:var(--muted);
   border-top:1px solid var(--line);padding-top:14px;margin:1.8rem 0 0}
+
+/* quick answer box */
+.qa{margin:18px 0 26px;padding:16px 18px;background:var(--sage);border-left:3px solid var(--pine);border-radius:0 14px 14px 0}
+.qa .qa-k{display:block;font:700 .66rem 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--pine);margin-bottom:6px}
+.qa p{margin:0;font-size:.98rem;line-height:1.65;color:var(--ink)}
