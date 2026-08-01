@@ -730,3 +730,43 @@ header.hide{transform:translateY(-100%)}
 .hero-crown{display:block;margin:26px auto 0;width:min(340px,72vw);height:auto;border-radius:20px;
   box-shadow:0 24px 60px rgba(30,60,45,.18);}
 @media(prefers-color-scheme:dark){.hero-crown{box-shadow:0 24px 60px rgba(0,0,0,.5)}}
+
+/* dark crown hero render: bleeds into the dark hero band */
+.hero-crown-dark{display:block;width:min(760px,92vw);height:auto;margin:18px auto -10px;
+  -webkit-mask-image:radial-gradient(120% 88% at 50% 42%,#000 55%,transparent 100%);
+  mask-image:radial-gradient(120% 88% at 50% 42%,#000 55%,transparent 100%)}
+@media(max-width:640px){.hero-crown-dark{width:100vw;margin-inline:calc(50% - 50vw)}}
+
+/* Apple-native floating crown: transparent cutout on the page itself */
+.crown-stage{position:relative;width:min(340px,64vw);margin:34px auto 10px}
+.crown-still{display:block;width:100%;height:auto;position:relative;z-index:1;
+  filter:drop-shadow(0 30px 44px rgba(0,0,0,.45));will-change:transform;
+  animation:crownFloat 7s ease-in-out infinite}
+.crown-glow{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);
+  width:78%;height:64px;border-radius:50%;z-index:0;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(224,160,72,.55),rgba(224,160,72,.14) 60%,transparent 75%);
+  filter:blur(10px);animation:glowPulse 7s ease-in-out infinite}
+@keyframes crownFloat{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-14px) rotate(1.2deg)}}
+@keyframes glowPulse{0%,100%{opacity:.85;transform:translateX(-50%) scale(1)}50%{opacity:.55;transform:translateX(-50%) scale(.92)}}
+@media(prefers-reduced-motion:reduce){.crown-still,.crown-glow{animation:none}}
+
+/* floating product shot (cutout, page-drawn glow) */
+.prod-stage{position:relative;width:min(260px,52vw);margin:20px auto 6px}
+.prod-shot{display:block;width:100%;height:auto;position:relative;z-index:1;
+  filter:drop-shadow(0 22px 34px rgba(30,60,45,.28));animation:prodFloat 8s ease-in-out infinite}
+.prod-glow{position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);
+  width:72%;height:46px;border-radius:50%;z-index:0;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(201,130,47,.42),rgba(201,130,47,.10) 62%,transparent 76%);
+  filter:blur(9px);animation:prodGlow 8s ease-in-out infinite}
+@keyframes prodFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes prodGlow{0%,100%{opacity:.8;transform:translateX(-50%) scale(1)}50%{opacity:.55;transform:translateX(-50%) scale(.93)}}
+@media(prefers-reduced-motion:reduce){.prod-shot,.prod-glow{animation:none}}
+
+/* scroll-driven rotating crown (transparent sprite sequence) */
+.crown-sprite{position:absolute;inset:0;z-index:2;opacity:0;transition:opacity .45s ease;
+  background-image:url('img/crown-sprite.png');background-repeat:no-repeat;
+  background-size:600% 400%;                /* 6 cols x 4 rows */
+  filter:drop-shadow(0 30px 44px rgba(0,0,0,.45))}
+.crown-stage.seq .crown-sprite{opacity:1}
+.crown-stage.seq .crown-still{opacity:0;transition:opacity .45s ease}
+@media(prefers-reduced-motion:reduce){.crown-sprite{display:none}.crown-stage.seq .crown-still{opacity:1}}

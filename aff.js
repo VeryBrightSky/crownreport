@@ -294,3 +294,82 @@ if (window.CF_ANALYTICS_TOKEN) {
     if (p > 0.65) { bar.classList.add("on"); shown = true; }
   }, { passive: true });
 })();
+
+// Apple-style scroll-scrub for the hero crown (activates only if the orbit video exists)
+(function(){
+  const stage = document.getElementById("crownStage");
+  const vid = document.getElementById("crownScrub");
+  const still = stage && stage.querySelector(".crown-still");
+  if (!stage) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  let ready = false;
+  if (vid) vid.addEventListener("loadedmetadata", () => {
+    if (!vid.duration || !isFinite(vid.duration)) return;
+    ready = true;
+    stage.classList.add("playing");
+    tick();
+  });
+  if (vid) vid.addEventListener("error", () => { /* no video yet: still image stays */ });
+
+  let target = 0, current = 0, raf = null;
+  function compute(){
+    const r = stage.getBoundingClientRect();
+    // progress 0..1 as the stage travels through the viewport
+    const p = 1 - (r.top + r.height * 0.5) / (innerHeight + r.height * 0.5);
+    return Math.max(0, Math.min(1, p));
+  }
+  function tick(){
+    if (!ready) return;
+    target = compute();
+    current += (target - current) * 0.12;              // smooth easing
+    if (vid.duration) vid.currentTime = current * vid.duration * 0.999;
+    // subtle parallax lift on the whole stage
+    stage.style.transform = "translateY(" + (current * -18).toFixed(2) + "px) scale(" + (1 + current * 0.05).toFixed(4) + ")";
+    raf = requestAnimationFrame(tick);
+  }
+  addEventListener("scroll", () => { if (ready && !raf) tick(); }, { passive: true });
+
+  // static-image fallback parallax when no video is present
+  if (still) {
+    addEventListener("scroll", () => {
+      if (ready) return;
+      const p = compute();
+      stage.style.transform = "translateY(" + (p * -14).toFixed(2) + "px) scale(" + (1 + p * 0.04).toFixed(4) + ")";
+    }, { passive: true });
+  }
+})();
+
+// scroll-driven crown rotation via transparent sprite sequence (Apple-style)
+(function(){
+  const stage = document.getElementById("crownStage");
+  const sprite = document.getElementById("crownSprite");
+  if (!stage || !sprite) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const COLS = 6, ROWS = 4, TOTAL = COLS * ROWS;
+  const img = new Image();
+  img.onload = () => { stage.classList.add("seq"); update(); };
+  img.src = "img/crown-sprite.png";
+
+  let cur = 0, tgt = 0, raf = null;
+  function progress(){
+    const r = stage.getBoundingClientRect();
+    const p = 1 - (r.top + r.height * 0.5) / (innerHeight + r.height * 0.5);
+    return Math.max(0, Math.min(1, p));
+  }
+  function draw(p){
+    const i = Math.min(TOTAL - 1, Math.max(0, Math.round(p * (TOTAL - 1))));
+    const cx = i % COLS, cy = Math.floor(i / COLS);
+    sprite.style.backgroundPosition = (cx * 100 / (COLS - 1)) + "% " + (cy * 100 / (ROWS - 1)) + "%";
+  }
+  function update(){
+    tgt = progress();
+    cur += (tgt - cur) * 0.16;
+    draw(cur);
+    if (Math.abs(tgt - cur) > 0.001) { raf = requestAnimationFrame(update); }
+    else { raf = null; }
+  }
+  addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+  addEventListener("resize", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+})();
