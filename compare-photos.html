@@ -85,9 +85,9 @@
       <div><label for="imgB">Now</label><input type="file" id="imgB" accept="image/*"></div>
     </div>
     <div id="stage" style="display:none;position:relative;margin-top:14px;border-radius:12px;overflow:hidden;user-select:none">
-      <img id="picA" alt="Before photo" style="display:block;width:100%">
+      <img id="picA" alt="Before photo" style="display:block;width:100%" loading="lazy" decoding="async">
       <div id="clipB" style="position:absolute;inset:0;width:50%;overflow:hidden">
-        <img id="picB" alt="Current photo" style="display:block;height:100%;object-fit:cover;object-position:left">
+        <img id="picB" alt="Current photo" style="display:block;height:100%;object-fit:cover;object-position:left" loading="lazy" decoding="async">
       </div>
       <div id="handle" style="position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;box-shadow:0 0 8px rgba(0,0,0,.5)"></div>
       <span style="position:absolute;left:10px;top:10px;background:rgba(0,0,0,.55);color:#fff;font:700 .65rem 'IBM Plex Mono',monospace;padding:4px 8px;border-radius:99px;letter-spacing:.08em">NOW</span>
