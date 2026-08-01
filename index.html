@@ -27,7 +27,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="The Crown Report" href="feed.xml">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preload" as="image" href="crown-cutout.png" fetchpriority="high">
+<link rel="preload" as="image" href="crown-cutout.webp" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="style.css">
 <noscript><style>
 .reveal{opacity:1;transform:none}
@@ -100,7 +100,7 @@ nav.links .top{display:none}}
     </div>
     <div class="crown-stage" id="crownStage" aria-hidden="false">
       <span class="crown-glow" aria-hidden="true"></span>
-      <img class="crown-still" src="crown-cutout.png" alt="The Crown Report emblem: a glazed pine ceramic crown with a glowing amber glass base" width="700" height="705" loading="eager" fetchpriority="high">
+      <picture><source srcset="crown-cutout.webp" type="image/webp"><img class="crown-still" src="crown-cutout.png" alt="The Crown Report emblem: a glazed pine ceramic crown with a glowing amber glass base" width="700" height="705" loading="eager" fetchpriority="high"></picture>
       <div class="crown-sprite" id="crownSprite" aria-hidden="true"></div>
     </div>
     <span class="scroll-hint" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
@@ -162,7 +162,7 @@ nav.links .top{display:none}}
   <div class="sect sect-head">
     <p class="kicker">Free tools</p>
     <h2>Decide with numbers, not ads</h2>
-    <p>Interactive tools that run in your browser. Nothing tracked, nothing stored.</p>
+    <p>Interactive tools that run in your browser. Nothing tracked, nothing stored. <a href="tools.html">See all six on one page →</a></p>
   </div>
   <div class="grid reveal">
     <a class="card" href="hair-loss-cost-calculator.html">
@@ -294,7 +294,9 @@ nav.links .top{display:none}}
         <a href="does-happy-head-work.html">Does It Work?</a>
       <a href="price-index.html">Price Index</a></div>
     <div><b class="fh">Tools &amp; Site</b>
-      <a href="hair-loss-cost-calculator.html">Cost Calculator</a>
+      
+      <a href="tools.html">All Free Tools</a>
+      <a href="hair-loss-statistics.html">Hair Loss Statistics</a><a href="hair-loss-cost-calculator.html">Cost Calculator</a>
       <a href="hair-loss-quiz.html">60-Second Quiz</a>
       <a href="shed-checker.html">Shed Checker</a>
       <a href="how-to-cancel-happy-head.html">How to Cancel</a>
