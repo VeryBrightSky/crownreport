@@ -6,7 +6,7 @@
    instead of a dead or misleading link.
    ============================================================ */
 window.AFF_URL = "https://track.revoffers.com/aff_c?offer_id=1389&aff_id=13097";
-window.CF_ANALYTICS_TOKEN = "c9b3ba1a374d42c89c7b6598e4dfc4e7"; // Katalys / Happy Head tracking link (live July 2026)
+window.CF_ANALYTICS_TOKEN = "f2c93b0545e54942b1dc906fe4c972bb"; // Katalys / Happy Head tracking link (live July 2026)
 
 (function () {
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
