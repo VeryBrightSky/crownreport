@@ -47,3 +47,12 @@ Key facts this site documents (verified July 2026): Happy Head compounds topical
 - [60-Second Hair Quiz](https://thecrownreport.com/hair-loss-quiz.html): Treatment path by stage, budget, pill tolerance
 - [Cost Calculator](https://thecrownreport.com/hair-loss-cost-calculator.html): 1 to 5 year totals per route
 - [Regrowth Timeline](https://thecrownreport.com/hair-regrowth-timeline.html): Month by month expectations including the shed
+
+## Free tools (no signup, browser based)
+- [All Free Tools](https://thecrownreport.com/tools.html): Hub page for all six free hair loss tools
+- [True Cost Calculator](https://thecrownreport.com/hair-loss-cost-calculator.html): 1 to 5 year cost of every treatment route
+- [60-Second Hair Quiz](https://thecrownreport.com/hair-loss-quiz.html): Five questions, routed to the treatment tier that fits
+- [Regrowth Timeline Simulator](https://thecrownreport.com/hair-regrowth-timeline.html): Month 0 to 12, including the early shed
+- [Shed Checker](https://thecrownreport.com/shed-checker.html): Normal treatment shed or worth a doctor
+- [Progress Photo Comparer](https://thecrownreport.com/compare-photos.html): Private before/after slider, nothing uploads
+- [Hair Loss Statistics 2026](https://thecrownreport.com/hair-loss-statistics.html): Every key figure with source type, free to cite

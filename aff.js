@@ -428,3 +428,15 @@ if (window.CF_ANALYTICS_TOKEN) {
     }, 60);
   });
 })();
+
+// copy buttons on the tool citation box
+document.addEventListener("click", async e => {
+  const b = e.target.closest(".cb-b");
+  if (!b) return;
+  try {
+    await navigator.clipboard.writeText(b.dataset.copy || "");
+    const old = b.textContent;
+    b.textContent = "Copied"; b.classList.add("done");
+    setTimeout(() => { b.textContent = old; b.classList.remove("done"); }, 1600);
+  } catch {}
+});

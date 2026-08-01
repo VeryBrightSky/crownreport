@@ -28,6 +28,9 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "@id": "https://thecrownreport.com/#website", "url": "https://thecrownreport.com/", "name": "The Crown Report", "description": "Hair loss, decoded by the numbers.", "publisher": {"@id": "https://thecrownreport.com/#organization"}, "inLanguage": "en-US", "potentialAction": {"@type": "SearchAction", "target": {"@type": "EntryPoint", "urlTemplate": "https://thecrownreport.com/articles.html?q={search_term_string}"}, "query-input": "required name=search_term_string"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".qa", "h1"]}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalWebPage", "@id": "https://thecrownreport.com/shed-checker.html#medicalwebpage", "url": "https://thecrownreport.com/shed-checker.html", "name": "The Shed Checker: Is My Hair Shedding Normal?", "description": "Free 4 question tool: is your shedding the normal minoxidil treatment shed or something to get checked? Instant read, runs in your browser, nothing stored.", "publisher": {"@id": "https://thecrownreport.com/#organization"}, "lastReviewed": "2026-08-01", "audience": {"@type": "Patient"}, "medicalAudience": {"@type": "MedicalAudience", "audienceType": "Patient"}, "about": {"@type": "MedicalCondition", "name": "Androgenetic alopecia", "alternateName": "Male pattern hair loss"}}</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "WebApplication", "@id": "https://thecrownreport.com/shed-checker.html#tool", "name": "The Shed Checker", "url": "https://thecrownreport.com/shed-checker.html", "description": "Four questions tell you whether your shedding is the normal treatment shed or the kind worth a professional look.", "applicationCategory": "HealthApplication", "operatingSystem": "Any (browser based)", "browserRequirements": "Requires JavaScript", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@id": "https://thecrownreport.com/#organization"}}
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -63,7 +66,7 @@
         <a href="hair-regrowth-timeline.html">Regrowth Timeline</a>
         <a href="shed-checker.html">Shed Checker</a>
         <a href="compare-photos.html">Photo Comparer</a>
-        <a href="hair-loss-faq.html">FAQ</a>
+        <a href="tools.html"><b>All tools →</b></a><a href="hair-loss-statistics.html">Statistics</a><a href="hair-loss-faq.html">FAQ</a>
       </div></div>
     <a class="top" href="articles.html">Articles</a>
     <a class="top" href="share-your-story.html">Your Results</a>
@@ -75,7 +78,7 @@
   <h1>The Shed Checker</h1>
   <p class="byline">Is what is in your drain the normal treatment shed, or something to get looked at? · <span class="fnote">we may earn a commission from marked partner links (<a href="about.html">details</a>)</span></p>
 
-  <div class="note qa"><strong>What this does:</strong> Four questions, instant read on whether your shedding matches the normal treatment shed or deserves a call to a provider. Runs entirely in your browser. Nothing is stored or sent anywhere.</div>
+  <div class="note tldr"><strong>What this does:</strong> Four questions, instant read on whether your shedding matches the normal treatment shed or deserves a call to a provider. Runs entirely in your browser. Nothing is stored or sent anywhere.</div>
 
   <div class="tool" id="shedTool">
     <label for="q1">1. Are you currently using minoxidil, finasteride, or dutasteride?</label>
@@ -122,6 +125,8 @@ document.getElementById("shedGo").addEventListener("click",()=>{
   out.style.display="block";out.innerHTML=h;out.scrollIntoView({behavior:"smooth",block:"nearest"});
 });
 </script>
+
+<div class="citebox" id="citebox"><b class="cb-h">Free to use, free to share</b><p>This tool is free and always will be. Link to it from a forum post, a comment, or your own site.</p><div class="cb-row"><span class="cb-l">Direct link</span><code class="cb-c">https://thecrownreport.com/shed-checker.html</code><button type="button" class="cb-b" data-copy="https://thecrownreport.com/shed-checker.html">Copy</button></div><div class="cb-row"><span class="cb-l">Credit line</span><code class="cb-c">&lt;a href="https://thecrownreport.com/shed-checker.html"&gt;The Shed Checker&lt;/a&gt; by The Crown Report</code><button type="button" class="cb-b" data-copy='<a href="https://thecrownreport.com/shed-checker.html">The Shed Checker</a> by The Crown Report'>Copy</button></div></div>
 </main>
 <footer><div class="wrap">
   <p class="flogo">The Crown<span>Report</span><em>Hair loss, decoded. Numbers first.</em></p>
