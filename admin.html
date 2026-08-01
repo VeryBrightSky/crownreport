@@ -62,7 +62,7 @@
     <input class="field" id="user" type="text" aria-label="Username" autocomplete="username" placeholder="Username" style="margin-bottom:10px">
     <input class="field" id="pw" type="password" aria-label="Password" autocomplete="current-password" placeholder="Password">
     <p class="err hidden" id="loginErr">Wrong key, or the backend isn't deployed yet.</p>
-    <button class="btn" id="loginBtn" style="margin-top:10px">Sign in <span class="arr">→</span></button>
+    <button class="btn" id="loginBtn" type="button" style="margin-top:10px">Sign in <span class="arr">→</span></button>
   </div>
 
   <div id="dash" class="hidden">
@@ -74,7 +74,7 @@
       <a href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank" rel="noopener">📊 Full visitor analytics <span>visits · unique visitors · referrers · top pages · countries · devices</span></a>
       <a href="https://app.katalys.com" target="_blank" rel="noopener">💰 Katalys money reports <span>clicks · conversions · commissions earned</span></a>
       <a href="https://dash.cloudflare.com/?to=/:account/workers/services/view/crownreport1/production/metrics" target="_blank" rel="noopener">⚡ Live traffic now <span>requests/sec · errors · response time</span></a>
-      <a href="reader-results.html" target="_blank">👀 Live reader page <span>what visitors see</span></a>
+      <a href="reader-results.html" target="_blank" rel="noopener">👀 Live reader page <span>what visitors see</span></a>
     </div>
     <div class="analytics-embed">
       <div class="ae-head">
@@ -102,9 +102,22 @@ let KEY=sessionStorage.getItem("crk")||"", SUBS=[], TAB="pending";
 const H=()=>({"Authorization":"Bearer "+KEY,"Content-Type":"application/json"});
 
 async function load(){
-  const r=await fetch("/api/admin/list",{headers:H()});
-  if(r.status===401){sessionStorage.removeItem("crk");show(false);$("loginErr").classList.remove("hidden");return false;}
-  const d=await r.json(); SUBS=d.subs||[]; render(); return true;
+  try{
+    const r=await fetch("/api/admin/list",{headers:H()});
+    if(r.status===401){sessionStorage.removeItem("crk");show(false);
+      $("loginErr").textContent="Wrong username or password.";
+      $("loginErr").classList.remove("hidden");return false;}
+    if(!r.ok){$("loginErr").textContent="Server error "+r.status+". Try again in a moment.";
+      $("loginErr").classList.remove("hidden");return false;}
+    const d=await r.json(); SUBS=d.subs||[];
+    try{ render(); }catch(e){ console.error("render failed",e); }
+    return true;
+  }catch(e){
+    console.error("login/network error",e);
+    $("loginErr").textContent="Could not reach the server. Check your connection or that the site is deployed.";
+    $("loginErr").classList.remove("hidden");
+    return false;
+  }
 }
 function show(ok){$("login").classList.toggle("hidden",ok);$("dash").classList.toggle("hidden",!ok);}
 function render(){

@@ -373,3 +373,58 @@ if (window.CF_ANALYTICS_TOKEN) {
   addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
   addEventListener("resize", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
 })();
+
+// ===== CONVERSION + ENGAGEMENT LAYER =====
+(function(){
+  const isArticle = document.querySelector("main .byline") && !/admin|articles|reader-results|share-your-story|404/.test(location.pathname);
+
+  // 1) Reading progress ring already exists; add estimated read time to byline if absent
+  if (isArticle) {
+    const by = document.querySelector("main .byline");
+    if (by && !/min read/.test(by.textContent)) {
+      const words = (document.querySelector("main").innerText || "").split(/\s+/).length;
+      const mins = Math.max(2, Math.round(words / 220));
+      const s = document.createElement("span");
+      s.textContent = mins + " min read · ";
+      by.insertBefore(s, by.firstChild);
+    }
+  }
+
+  // 2) "Keep reading" related-articles strip, auto-built from the nav (zero maintenance)
+  if (isArticle && !document.getElementById("keepReading")) {
+    const here = location.pathname.split("/").pop();
+    const links = [...document.querySelectorAll('nav.links .dd a')]
+      .map(a => ({href: a.getAttribute("href"), text: a.textContent.trim()}))
+      .filter(x => x.href && x.href.endsWith(".html") && x.href !== here && !/^All articles/.test(x.text));
+    // pick 3 pseudo-randomly but stable per page
+    let seed = here.split("").reduce((a,c)=>a+c.charCodeAt(0),0);
+    const picks = [];
+    while (picks.length < 3 && links.length) {
+      seed = (seed * 9301 + 49297) % 233280;
+      picks.push(links.splice(seed % links.length, 1)[0]);
+    }
+    if (picks.length) {
+      const box = document.createElement("div");
+      box.id = "keepReading";
+      box.className = "keep-reading";
+      box.innerHTML = "<b>Keep reading</b>" + picks.map(p =>
+        `<a href="${p.href}">${p.text} <span aria-hidden="true">→</span></a>`).join("");
+      const fp = document.querySelector("main details.fp");
+      (fp ? fp.parentNode.insertBefore(box, fp) : document.querySelector("main").appendChild(box));
+    }
+  }
+
+  // 3) Copy-link toast on the Share button (small delight, drives shares)
+  document.addEventListener("click", e => {
+    const b = e.target.closest && e.target.closest("main .byline button");
+    if (!b) return;
+    setTimeout(() => {
+      if (!/copied/i.test(b.textContent)) return;
+      const t = document.createElement("div");
+      t.className = "toast"; t.textContent = "Link copied";
+      document.body.appendChild(t);
+      requestAnimationFrame(() => t.classList.add("on"));
+      setTimeout(() => { t.classList.remove("on"); setTimeout(()=>t.remove(), 400); }, 1800);
+    }, 60);
+  });
+})();
